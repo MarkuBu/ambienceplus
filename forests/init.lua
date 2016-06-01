@@ -1,0 +1,12 @@
+--~ local timer = 0
+--~ local counter = 0
+--~ minetest.register_globalstep(function(dtime)
+  --~ timer = timer + dtime;
+  --~ counter = counter +1
+  --~ if timer >= 1 then
+    --~ -- Send "Minetest" to all players every 5 seconds
+    --~ minetest.chat_send_all(counter)
+    --~ timer = 0
+    --~ counter = 0
+  --~ end
+--~ end)
