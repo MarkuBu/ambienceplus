@@ -1,18 +1,21 @@
-local jungle_sound_counter = 0
-local jungle_sound_timer = 0
+local jungle_sound_timer = 11
 local jungle_sound_last_time = os.clock()
 minetest.register_abm({
   nodenames = {"default:jungletree"},
-  neighbors = {"default:jungleleaves"},
+  neighbors = {"default:jungleleaves", "valleys_c:jungleleaves2", "valleys_c:jungleleaves3"},
   interval = 10,
   chance = 5000,
   action = function(pos, node, active_object_count, active_object_count_wider)
+    for _,player in ipairs(minetest.get_connected_players()) do
+      local ppos = player:getpos()
+      if ppos.y < 0 then return end
+    end
     if jungle_sound_timer > 10 then
       minetest.sound_play("ambplus_jungle", {
         pos = pos,
         catch_up = false,
         max_hear_distance = 45,
-        gain = 1,
+        gain = 1.5,
       })
       jungle_sound_timer = 0
     end
@@ -20,30 +23,3 @@ minetest.register_abm({
     jungle_sound_last_time = os.clock()
   end,
 })
-
---~ minetest.register_abm({
-  --~ nodenames = {"default:pine_tree"},
-  --~ neighbors = {"default:pine_needles"},
-  --~ interval = 20,
-  --~ chance = 5000,
-  --~ action = function(pos, node, active_object_count, active_object_count_wider)
-    --~ print('jungleabm')
-    --~ minetest.sound_play("ambplus_jungle", {
-      --~ pos = pos,
-      --~ max_hear_distance = 50,
-      --~ gain = 1,
-    --~ })
-  --~ end,
---~ })
---~ local timer = 0
---~ local counter = 0
---~ minetest.register_globalstep(function(dtime)
-  --~ timer = timer + dtime;
-  --~ counter = counter +1
-  --~ if timer >= 1 then
-    --~ -- Send "Minetest" to all players every 5 seconds
-    --~ minetest.chat_send_all(counter)
-    --~ timer = 0
-    --~ counter = 0
-  --~ end
---~ end)
