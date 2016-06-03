@@ -8,6 +8,7 @@ minetest.register_abm({
   action = function(pos, node, active_object_count, active_object_count_wider)
     for _,player in ipairs(minetest.get_connected_players()) do
       local ppos = player:getpos()
+      -- no new sounds if player is underground. Should use heightmap
       if ppos.y < 0 then return end
     end
     if river_sound_timer > 5 then
