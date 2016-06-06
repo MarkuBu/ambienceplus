@@ -21,10 +21,10 @@ minetest.register_abm({
       if nextair and ppos then
         local path = minetest.find_path(ppos, {x=nextair.x, y=nextair.y+1, z=nextair.z}, 70, 10, 10, "A*_noprefetch")
         if path then
-          for _, pathpos in pairs(path) do
-            --print(dump(pathpos))
-            minetest.set_node({x=pathpos.x, y=pathpos.y-1, z=pathpos.z}, {name="default:gravel"})
-          end
+          --~ for _, pathpos in pairs(path) do
+            --~ --print(dump(pathpos))
+            --~ minetest.set_node({x=pathpos.x, y=pathpos.y-1, z=pathpos.z}, {name="default:gravel"})
+          --~ end
           if daytime > 5000 and daytime < 19250 then -- day
             minetest.sound_play("ambplus_forest", {
               pos = pos,
@@ -68,10 +68,10 @@ minetest.register_abm({
       if nextair and ppos then
         local path = minetest.find_path(ppos, {x=nextair.x, y=nextair.y+1, z=nextair.z}, 70, 10, 10, "A*_noprefetch")
         if path then
-          for _, pathpos in pairs(path) do
-            --print(dump(pathpos))
-            minetest.set_node({x=pathpos.x, y=pathpos.y-1, z=pathpos.z}, {name="default:gravel"})
-          end
+          --~ for _, pathpos in pairs(path) do
+            --~ --print(dump(pathpos))
+            --~ minetest.set_node({x=pathpos.x, y=pathpos.y-1, z=pathpos.z}, {name="default:gravel"})
+          --~ end
           if daytime > 5000 and daytime < 19250 then -- day
             minetest.sound_play("ambplus_forest", {
               pos = pos,
