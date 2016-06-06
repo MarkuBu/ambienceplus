@@ -17,14 +17,12 @@ minetest.register_abm({
       if daytime > 5000 and daytime < 19250 then -- day
         minetest.sound_play("ambplus_jungle", {
           pos = pos,
-          catch_up = false,
           max_hear_distance = 45,
           gain = 1.5,
         })
       else                                       -- night
         minetest.sound_play("ambplus_jungle_night", {
           pos = pos,
-          catch_up = false,
           max_hear_distance = 45,
           gain = 1,
         })

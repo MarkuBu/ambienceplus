@@ -11,10 +11,9 @@ minetest.register_abm({
       -- no new sounds if player is underground. Should use heightmap
       if ppos.y < 0 then return end
     end
-    if river_sound_timer > 5 then
+    if river_sound_timer > 2 then
       minetest.sound_play("ambplus_river", {
         pos = pos,
-        catch_up = false,
         max_hear_distance = 45,
         gain = 0.3,
       })
