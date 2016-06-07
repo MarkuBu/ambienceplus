@@ -26,19 +26,18 @@ minetest.register_abm({
   neighbors = {"air"},
   interval = 15,
   chance = 20,
-  catch_up = true,
+  catch_up = false,
   action = function(pos, node, active_object_count, active_object_count_wider)
-
     if ocean_sound_timer == 1 then
       minetest.after(1,  function()
           local ppos
           for _,player in ipairs(minetest.get_connected_players()) do
             ppos = player:getpos()
-            -- no new sounds if player is underground. Should use heightmap
           end
           if ppos.y > -5 then
             local newpos = oceannodelist[math.random(1, #oceannodelist)]
-            if newpos and is_large(newpos, 5) then
+            if newpos ~= nil then
+            print("ocean", #oceannodelist, vector.distance(ppos, newpos))
               minetest.sound_play("ambplus_lake", {
                 pos = newpos,
                 max_hear_distance = 70,
@@ -50,9 +49,13 @@ minetest.register_abm({
           oceannodelist = {}
         end)
       ocean_sound_timer = 0
-      table.insert(oceannodelist, pos)
+      if  is_large(pos, 5) then
+        table.insert(oceannodelist, pos)
+      end
     else
-      table.insert(oceannodelist, pos)
+      if  is_large(pos, 5) then
+        table.insert(oceannodelist, pos)
+      end
     end
 
   end,

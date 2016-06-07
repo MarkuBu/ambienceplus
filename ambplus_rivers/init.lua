@@ -6,7 +6,7 @@ minetest.register_abm({
   neighbors = {"default:river_water_flowing"},
   interval = 15,
   chance = 20,
-  catch_up = false,
+  catch_up = true,
 
   action = function(pos, node, active_object_count, active_object_count_wider)
 
@@ -15,15 +15,14 @@ minetest.register_abm({
           local ppos
           for _,player in ipairs(minetest.get_connected_players()) do
             ppos = player:getpos()
-            -- no new sounds if player is underground. Should use heightmap
           end
           if ppos.y > -5 then
             local newpos = rivernodelist[math.random(1, #rivernodelist)]
-            if newpos then
-              --minetest.set_node(newpos, {name="default:meselamp"})
+            if newpos ~= nil then
+            print("river", #rivernodelist, vector.distance(ppos, newpos))
               minetest.sound_play("ambplus_river", {
                 pos = newpos,
-                max_hear_distance = 45,
+                max_hear_distance = 60,
                 gain = 0.8,
               })
             end
