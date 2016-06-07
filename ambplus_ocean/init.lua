@@ -1,7 +1,7 @@
 local ocean_sound_timer = 1
 local water_level = tonumber(minetest.setting_get("water_level"))
 
-local nodelist = {}
+local oceannodelist = {}
 
 -- don't play ocean sounds in a puddle
 local function is_large(pos, size)
@@ -24,8 +24,9 @@ minetest.register_abm({
   -- only nodes at the surface
   nodenames = {"default:water_source"},
   neighbors = {"air"},
-  interval = 10,
-  chance = 100,
+  interval = 15,
+  chance = 20,
+  catch_up = true,
   action = function(pos, node, active_object_count, active_object_count_wider)
 
     if ocean_sound_timer == 1 then
@@ -36,7 +37,7 @@ minetest.register_abm({
             -- no new sounds if player is underground. Should use heightmap
           end
           if ppos.y > -5 then
-            local newpos = nodelist[math.random(1, #nodelist)]
+            local newpos = oceannodelist[math.random(1, #oceannodelist)]
             if newpos and is_large(newpos, 5) then
               minetest.sound_play("ambplus_lake", {
                 pos = newpos,
@@ -46,12 +47,12 @@ minetest.register_abm({
             end
           end
           ocean_sound_timer = 1
-          nodelist = {}
+          oceannodelist = {}
         end)
       ocean_sound_timer = 0
-      table.insert(nodelist, pos)
+      table.insert(oceannodelist, pos)
     else
-      table.insert(nodelist, pos)
+      table.insert(oceannodelist, pos)
     end
 
   end,
