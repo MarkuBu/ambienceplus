@@ -1,4 +1,4 @@
-local river_sound_timer = 1
+local river_sound_status = 1
 local rivernodelist = {}
 
 minetest.register_abm({
@@ -10,7 +10,7 @@ minetest.register_abm({
 
   action = function(pos, node, active_object_count, active_object_count_wider)
 
-    if river_sound_timer == 1 then
+    if river_sound_status == 1 then
       minetest.after(1,  function()
           local ppos
           for _,player in ipairs(minetest.get_connected_players()) do
@@ -19,7 +19,7 @@ minetest.register_abm({
           if ppos.y > -5 then
             local newpos = rivernodelist[math.random(1, #rivernodelist)]
             if newpos ~= nil then
-            print("river", #rivernodelist, vector.distance(ppos, newpos))
+            --print("river", #rivernodelist, math.floor(vector.distance(ppos, newpos)+0.5))
               minetest.sound_play("ambplus_river", {
                 pos = newpos,
                 max_hear_distance = 60,
@@ -27,10 +27,10 @@ minetest.register_abm({
               })
             end
           end
-          river_sound_timer = 1
+          river_sound_status = 1
           rivernodelist = {}
         end)
-      river_sound_timer = 0
+      river_sound_status = 0
       table.insert(rivernodelist, pos)
     else
       table.insert(rivernodelist, pos)

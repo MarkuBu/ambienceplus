@@ -1,4 +1,4 @@
-local ocean_sound_timer = 1
+local ocean_sound_status = 1
 local water_level = tonumber(minetest.setting_get("water_level"))
 
 local oceannodelist = {}
@@ -28,32 +28,49 @@ minetest.register_abm({
   chance = 20,
   catch_up = false,
   action = function(pos, node, active_object_count, active_object_count_wider)
-    if ocean_sound_timer == 1 then
+    if ocean_sound_status == 1 then
       minetest.after(1,  function()
           local ppos
           for _,player in ipairs(minetest.get_connected_players()) do
             ppos = player:getpos()
           end
+
           if ppos.y > -5 then
+            local daytime = minetest.get_timeofday()*24000
             local newpos = oceannodelist[math.random(1, #oceannodelist)]
             if newpos ~= nil then
-            print("ocean", #oceannodelist, vector.distance(ppos, newpos))
-              minetest.sound_play("ambplus_lake", {
-                pos = newpos,
-                max_hear_distance = 70,
-                gain = 1.5,
-              })
+              if daytime > 5000 and daytime < 19250 then -- day
+
+              --print("ocean", #oceannodelist, math.floor(vector.distance(ppos, newpos)+0.5))
+                minetest.sound_play("ambplus_lake", {
+                  pos = newpos,
+                  max_hear_distance = 80,
+                  gain = 2,
+                })
+                if math.random(1, 5) == 1 then  -- play randomly seagulls at day
+                  minetest.sound_play("ambplus_seagulls", {
+                    pos = newpos,
+                    max_hear_distance = 80,
+                    gain = 2,
+                  })
+                end
+              else
+                minetest.sound_play("ambplus_lake", {
+                  pos = newpos,
+                  max_hear_distance = 80,
+                  gain = 2,
+                })              end
             end
           end
-          ocean_sound_timer = 1
+          ocean_sound_status = 1
           oceannodelist = {}
         end)
-      ocean_sound_timer = 0
-      if  is_large(pos, 5) then
+      ocean_sound_status = 0
+      if  is_large(pos, 8) then
         table.insert(oceannodelist, pos)
       end
     else
-      if  is_large(pos, 5) then
+      if  is_large(pos, 8) then
         table.insert(oceannodelist, pos)
       end
     end

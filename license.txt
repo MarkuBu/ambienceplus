@@ -18,5 +18,5 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 Audio files from freesfx read this
 http://www.freesfx.co.uk/info/eula/
 
-ambplus_jungle.*.ogg
-http://www.freesfx.co.uk/soundeffects/forests-jungles/
+Audio files from orangefreesounds
+http://www.orangefreesounds.com
